@@ -1,5 +1,5 @@
 .idea
 .venv
 .env
-docker/mysql/database/*
+docker/mysql/database/
 __pycache__/
