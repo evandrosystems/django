@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+
+  mysql:
+    build:
+      context: .
+      dockerfile: ./docker/mysql/Dockerfile
+    container_name: jge_mysql
+    image: jge_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: jge
+      MYSQL_USER: jge
+      MYSQL_DATABASE: jge
+      MYSQL_PASSWORD: jge
+    volumes:
+      - ./docker/mysql/database:/var/lib/mysql
+    env_file:
+      - .env
+    ports:
+      - "${DOCKER_MYSQL_PORT}:${DOCKER_MYSQL_PORT}"
