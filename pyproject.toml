@@ -1,5 +1,5 @@
 [tool.black]
 line-length = 88
 exclude = '''
-/(\.git|\.venv|\venv|\.pgdata|__pycache__|dist|build|\.eggs)/
+/(\.git|\.venv|\venv|\.pgdata|__pycache__|docker)/
 '''
