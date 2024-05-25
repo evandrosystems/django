@@ -2,20 +2,46 @@ version: '3.8'
 
 services:
 
+  # only to production - docker compose build python
+  python:
+    build:
+      context: .
+      dockerfile: ./.docker/python/Dockerfile
+    container_name: container_python
+    image: image_python
+    volumes:
+      - .:/var/www/html
+    env_file:
+      - .env
+    networks:
+      - django
+    ports:
+      - "${CONTAINER_PYTHON_PORT}:8000"
+    # command: uvicorn app_name.asgi:application --host 0.0.0.0 --port 8000 --reload
+    # command: python manage.py runserver 0.0.0.0:8000
+    restart: always
+
+  # docker compose build mysql
   mysql:
     build:
       context: .
-      dockerfile: ./docker/mysql/Dockerfile
-    container_name: jge_mysql
-    image: jge_mysql
+      dockerfile: ./.docker/mysql/Dockerfile
+    container_name: container_name
+    image: image_name
     environment:
-      MYSQL_ROOT_PASSWORD: jge
-      MYSQL_USER: jge
-      MYSQL_DATABASE: jge
-      MYSQL_PASSWORD: jge
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: username
+      MYSQL_DATABASE: database
+      MYSQL_PASSWORD: root
     volumes:
-      - ./docker/mysql/database:/var/lib/mysql
+      - ./.docker/mysql/database:/var/lib/mysql
     env_file:
       - .env
+    networks:
+      - django
     ports:
-      - "${DOCKER_MYSQL_PORT}:${DOCKER_MYSQL_PORT}"
+      - "${DOCKER_MYSQL_PORT}:3306"
+
+networks:
+  django:
+    driver: bridge
