@@ -5,7 +5,7 @@ services:
   mysql:
     build:
       context: .
-      dockerfile: ./docker/mysql/Dockerfile
+      dockerfile: ./.docker/mysql/Dockerfile
     container_name: container_name
     image: image_name
     environment:
@@ -14,7 +14,7 @@ services:
       MYSQL_DATABASE: mysql
       MYSQL_PASSWORD: root
     volumes:
-      - ./docker/mysql/database:/var/lib/mysql
+      - ./.docker/mysql/database:/var/lib/mysql
     env_file:
       - .env
     ports:
