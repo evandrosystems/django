@@ -2,6 +2,24 @@ version: '3.8'
 
 services:
 
+  # only to production - docker compose build python
+  python:
+    build:
+      context: .
+      dockerfile: ./.docker/python/Dockerfile
+    container_name: container_python
+    image: image_python
+    volumes:
+      - .:/var/www/html
+    env_file:
+      - .env
+    ports:
+      - "${CONTAINER_PYTHON_PORT}:8000"
+    # command: uvicorn app_name.asgi:application --host 0.0.0.0 --port 8000 --reload
+    # command: python manage.py runserver 0.0.0.0:8000
+    restart: always
+
+  # docker compose build mysql
   mysql:
     build:
       context: .
