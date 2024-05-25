@@ -13,6 +13,8 @@ services:
       - .:/var/www/html
     env_file:
       - .env
+    networks:
+      - django
     ports:
       - "${CONTAINER_PYTHON_PORT}:8000"
     # command: uvicorn app_name.asgi:application --host 0.0.0.0 --port 8000 --reload
@@ -35,5 +37,11 @@ services:
       - ./.docker/mysql/database:/var/lib/mysql
     env_file:
       - .env
+    networks:
+      - django
     ports:
       - "${DOCKER_MYSQL_PORT}:3306"
+
+networks:
+  django:
+    driver: bridge
