@@ -18,4 +18,4 @@ services:
     env_file:
       - .env
     ports:
-      - "${DOCKER_MYSQL_PORT}:${DOCKER_MYSQL_PORT}"
+      - "${DOCKER_MYSQL_PORT}:8000"
