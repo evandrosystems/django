@@ -1,4 +1,4 @@
-name: before merge and exec tests
+name: develop ci
 
 on:
   pull_request:
@@ -6,9 +6,8 @@ on:
 
 jobs:
 
-  continuos-integration:
+  ci:
     runs-on: ubuntu-latest
-
     steps:
       - name: use checkout
         uses: actions/checkout@v2
@@ -31,13 +30,13 @@ jobs:
           source .venv/bin/activate
           pip install -r requirements-dev.txt
 
-      - name: check code style with flake8 #command flake8
+      - name: check code style with flake8
         run: |
           set -e
           source .venv/bin/activate
           flake8
 
-      - name: using black to format code. #command black .
+      - name: using black to format code.
         run: |
           set -e
           source .venv/bin/activate
