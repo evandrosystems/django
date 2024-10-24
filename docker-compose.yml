@@ -1,14 +1,12 @@
 version: '3.8'
 
 services:
-
-  # only to production - docker compose build python
   python:
     build:
       context: .
       dockerfile: ./.docker/python/Dockerfile
-    container_name: container_python
-    image: image_python
+    container_name: django.python
+    image: django.python
     volumes:
       - .:/var/www/html
     env_file:
@@ -16,31 +14,31 @@ services:
     networks:
       - django
     ports:
-      - "${CONTAINER_PYTHON_PORT}:8000"
-    # command: uvicorn app_name.asgi:application --host 0.0.0.0 --port 8000 --reload
-    # command: python manage.py runserver 0.0.0.0:8000
+      - "8000:8000"
+    command: uvicorn app_name.asgi:application --host 0.0.0.0 --port 8000 --reload
     restart: always
 
-  # docker compose build mysql
   mysql:
     build:
       context: .
       dockerfile: ./.docker/mysql/Dockerfile
-    container_name: container_name
-    image: image_name
+    container_name: django.mysql
+    image: django.mysql
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_USER: username
-      MYSQL_DATABASE: database
-      MYSQL_PASSWORD: root
+      MYSQL_USER: django
+      MYSQL_DATABASE: django
+      MYSQL_PASSWORD: django
     volumes:
       - ./.docker/mysql/database:/var/lib/mysql
     env_file:
       - .env
     networks:
       - django
+    depends_on:
+      - python
     ports:
-      - "${DOCKER_MYSQL_PORT}:3306"
+      - "3306:3306"
 
 networks:
   django:
